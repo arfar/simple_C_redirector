@@ -8,9 +8,11 @@ struct link_redirect
 } link_redirect;
 
 const struct link_redirect link_redirects[] = {
-    {"ex", "example.com"},
-    {"öri", "example.com/test"},
-    {"ö", "example.com/ö"},
+    {"ex", "http://example.com"},
+    {"öri", "https://example.com/test"},
+    {"ö", "http://example.com/ö"},
 };
+
+#define NUM_LINK_REDIRECTS  (sizeof(link_redirects)/sizeof(link_redirects[0]))
 
 #endif /* MY_LINK_REDR */

@@ -3,8 +3,6 @@
 
 #define PORT                    8080
 
-#define NUM_LINK_REDIRECTS  (sizeof(link_redirects)/sizeof(link_redirects[0]))
-
 #define STRLEN(s) (sizeof(s)/sizeof(s[0]))
 
 #define CANT_FIND_PAGE_PAGE \

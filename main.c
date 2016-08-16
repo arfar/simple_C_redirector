@@ -35,6 +35,7 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
     char * url_tok;
 
     url_tok = strtok((char*)url, "/");
+    printf("url: %s, url_tok: %s\n", url, url_tok);
 
     if (url_tok == NULL || strcmp(url_tok, "") == 0)
     {
@@ -50,14 +51,16 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
 
         if (redirect_url)
         {
+            printf("%s -> %s", url, redirect_url);
             response = MHD_create_response_from_buffer(
                 0, NULL, MHD_RESPMEM_PERSISTENT
             );
             MHD_add_response_header (response, "Location", redirect_url);
-            http_response_num = 301;
+            http_response_num = 302;
         }
         else
         {
+            printf("No match for %s", url);
             response = MHD_create_response_from_buffer(
                 CANT_FIND_PAGE_PAGE_LEN, (void *)CANT_FIND_PAGE_PAGE,
                 MHD_RESPMEM_PERSISTENT
@@ -89,10 +92,16 @@ main (int argc, char *argv[])
                                MHD_OPTION_END);
     if (NULL == daemon)
     {
-        printf("Error starting daemon\n");
+        printf ("Error starting daemon\n");
         return 1;
     }
-    getchar();
+    printf ("Server started on %i\n", PORT);
+    while (getchar() != 'q')
+    {
+        continue;
+    }
+
     MHD_stop_daemon (daemon);
+    printf ("Server exited\n");
     return 0;
 }
