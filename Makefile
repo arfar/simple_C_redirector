@@ -5,16 +5,16 @@
 
 PROJECT_NAME	= linkredr
 
-CC				= gcc
-LIBS			= -lmicrohttpd
+CC		= gcc
+LIBS		= -lmicrohttpd
 
 all: $(PROJECT_NAME)
 
-$(PROJECT_NAME): redirects.h main.o main.h
+$(PROJECT_NAME): redirects.h main.o
 	$(CC) -o $@ $^ $(LIBS)
 
-%.o: %.c
-	$(CC) -o $@ -c $^
+main.o: main.c main.h
+	$(CC) -o $@ -c $<
 
 redirects.h:
 	@echo "########################################################"
