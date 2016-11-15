@@ -3,7 +3,7 @@
 This a very small server application (using Libmicrohttpd for the webserver
 part) for providing HTTP redirects.
 
-The redirects are defined compile time in the `link_redirects.h` file (which
+The redirects are defined compile time in the `redirects.h` file (which
 you'll need to create). See the `example_redirects.h` for an example of what
 the file should look like.
 
@@ -25,15 +25,15 @@ sudo apt-get install libmicrohttpd-dev
 
 ## Installation
 
-Rename the `example_redirects.h` file to `link_redirects.h` and edit to include
+Rename the `example_redirects.h` file to `redirects.h` and edit to include
 whatever link redirects you want.
 
 ```
-mv example_redirects.h link_redirects.h
+mv example_redirects.h redirects.h
 ```
 
-Compiling should _just work_, I have only tested on my a few PCs running Debian
-based distros, so may be other quirks I haven't come across
+Compiling should `JUST WORK`<sup>TM</sup>, I have only tested on a few PCs
+running Debian based distros, so may be other quirks I haven't come across.
 
 ```
 make all
@@ -66,8 +66,8 @@ couldn't include something a little fancier with CSS or something.
 
 That's it. No runtime options possible - everything is done compile time.
 
-Just point your browser to the server (probable `localhost:8080`) and have a
-play around. It really is stupidly simple.
+Just point your browser to the server (`localhost:8080` is the default) and
+have a play around. It really is stupidly simple.
 
 ## Licence
 AGPLv3
