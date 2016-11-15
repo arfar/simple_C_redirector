@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "main.h"
-#include "link_redirects.h"
+#include "redirects.h"
 
 char *
 get_redirected_url(const char *url)
@@ -35,7 +35,6 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
     char * url_tok;
 
     url_tok = strtok((char*)url, "/");
-    printf("url: %s, url_tok: %s\n", url, url_tok);
 
     if (url_tok == NULL || strcmp(url_tok, "") == 0)
     {
@@ -43,6 +42,7 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
             NO_PAGE_INPUTTED_PAGE_LEN, (void *)NO_PAGE_INPUTTED_PAGE,
             MHD_RESPMEM_PERSISTENT
         );
+        MHD_add_response_header (response, "Content-Type", "text/html");
         http_response_num = MHD_HTTP_OK;
     }
     else
@@ -51,7 +51,6 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
 
         if (redirect_url)
         {
-            printf("%s -> %s", url, redirect_url);
             response = MHD_create_response_from_buffer(
                 0, NULL, MHD_RESPMEM_PERSISTENT
             );
@@ -60,11 +59,11 @@ answer_to_connection (void *cls, struct MHD_Connection *connection,
         }
         else
         {
-            printf("No match for %s", url);
             response = MHD_create_response_from_buffer(
                 CANT_FIND_PAGE_PAGE_LEN, (void *)CANT_FIND_PAGE_PAGE,
                 MHD_RESPMEM_PERSISTENT
             );
+            MHD_add_response_header (response, "Content-Type", "text/html");
             http_response_num = MHD_HTTP_OK;
         }
     }
@@ -96,10 +95,8 @@ main (int argc, char *argv[])
         return 1;
     }
     printf ("Server started on %i\n", PORT);
-    while (getchar() != 'q')
-    {
-        continue;
-    }
+
+    pause();
 
     MHD_stop_daemon (daemon);
     printf ("Server exited\n");
